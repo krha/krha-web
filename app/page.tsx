@@ -228,9 +228,9 @@ export default function Home() {
             Kiryong Ha <span>(하기룡)</span>
           </a>
           <nav aria-label="Primary navigation">
-            <a href="#publications">Publications</a>
-            <a href="#work">Research</a>
             <a href="#career">Career</a>
+            <a href="#work">Research</a>
+            <a href="#publications">Publications</a>
             <ExternalLink href="https://www.linkedin.com/in/kiryong-ha">
               LinkedIn
             </ExternalLink>
@@ -278,9 +278,9 @@ export default function Home() {
           <section className="content-section" aria-labelledby="about">
             <SectionTitle id="about">About</SectionTitle>
             <p className="lead">
-              I am a Principal Engineer at Meta working on hyperscale capacity
-              management and capacity fulfillment for Meta&apos;s private cloud,
-              including the infrastructure that supports AI workloads.
+              I am a Principal Engineer (E8) at Meta currently working on
+              hyperscale capacity management and capacity fulfillment for
+              Meta&apos;s private cloud.
             </p>
             <p>
               My work focuses on turning demand forecasts, measured supply,

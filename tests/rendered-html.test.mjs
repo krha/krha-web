@@ -31,6 +31,10 @@ test("server-renders Kiryong Ha's professional profile", async () => {
   const html = await response.text();
   assert.match(html, /Kiryong Ha/);
   assert.match(html, /Principal Engineer/);
+  assert.match(
+    html,
+    /Principal Engineer \(E8\) at Meta currently working on\s+hyperscale capacity management and capacity fulfillment for\s+Meta(?:&#x27;|&apos;|')s private cloud/i,
+  );
   assert.match(html, /capacity fulfillment/i);
   assert.match(html, /hyper-scale products like Facebook and Instagram/i);
   assert.match(html, /AI\/Non-AI infrastructure/i);
@@ -41,6 +45,8 @@ test("server-renders Kiryong Ha's professional profile", async () => {
   );
   assert.doesNotMatch(html, /What(?:&#x27;|&apos;|')s New/i);
   assert.ok(html.indexOf(">GitHub<") < html.indexOf(">Scholar<"));
+  assert.ok(html.indexOf(">Career<") < html.indexOf(">Research<"));
+  assert.ok(html.indexOf(">Research<") < html.indexOf(">Publications<"));
   assert.ok(html.indexOf('id="career"') < html.indexOf('id="work"'));
   assert.match(html, /application\/ld\+json/);
   assert.match(html, /https:\/\/schema\.org/);
