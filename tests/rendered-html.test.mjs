@@ -72,7 +72,10 @@ test("ships crawler, review, and original-site palette artifacts", async () => {
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.match(css, /--heading: #333333/);
   assert.match(css, /--link: #337ab7/);
-  assert.match(css, /--navbar: #f8f8f8/);
-  assert.match(css, /--surface: #f5f5f5/);
+  assert.match(css, /--page-background: #e5e9e1/);
+  assert.match(css, /--panel: #f4f4f4/);
+  assert.match(css, /--navbar: #303030/);
+  assert.match(css, /--surface: #ffffff/);
+  assert.match(css, /border-radius: 32px/);
   assert.match(css, /--footer: #313131/);
 });

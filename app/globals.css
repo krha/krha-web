@@ -8,8 +8,11 @@
   --link-hover: #23527c;
   --border: #dddddd;
   --soft-border: #eeeeee;
-  --navbar: #f8f8f8;
-  --surface: #f5f5f5;
+  --page-background: #e5e9e1;
+  --panel: #f4f4f4;
+  --panel-border: #d8dbd5;
+  --navbar: #303030;
+  --surface: #ffffff;
   --surface-border: #e3e3e3;
   --surface-accent: #cccccc;
   --footer: #313131;
@@ -32,7 +35,7 @@ html {
 body {
   margin: 0;
   padding-top: 51px;
-  background: #ffffff;
+  background: var(--page-background);
   color: var(--text);
   font-family: var(--body-font);
   font-size: 16px;
@@ -75,7 +78,7 @@ h3 {
 
 .navbar {
   background: var(--navbar);
-  border-bottom: 1px solid #e7e7e7;
+  border-bottom: 1px solid #1f1f1f;
   min-height: 51px;
   position: fixed;
   inset: 0 0 auto;
@@ -94,7 +97,7 @@ h3 {
 
 .navbar-brand {
   align-items: center;
-  color: #555555;
+  color: #eeeeee;
   display: flex;
   font-family: var(--nav-font);
   font-size: 17px;
@@ -103,13 +106,13 @@ h3 {
 }
 
 .navbar-brand span {
-  color: #777777;
+  color: #eeeeee;
   font-weight: 500;
   margin-left: 0.35em;
 }
 
 .navbar-brand:hover {
-  color: #333333;
+  color: #ffffff;
   text-decoration: none;
 }
 
@@ -120,7 +123,7 @@ h3 {
 
 .navbar nav > a {
   align-items: center;
-  color: #777777;
+  color: #dddddd;
   display: flex;
   font-family: var(--nav-font);
   font-size: 14px;
@@ -129,18 +132,22 @@ h3 {
 }
 
 .navbar nav > a:hover {
-  background: #eeeeee;
-  color: #333333;
+  background: #3b3b3b;
+  color: #ffffff;
   text-decoration: none;
 }
 
 .page-shell {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 32px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
   display: grid;
   gap: 42px;
   grid-template-columns: 245px minmax(0, 1fr);
-  margin: 0 auto;
+  margin: 10px auto 48px;
   max-width: 1080px;
-  padding: 36px 15px 64px;
+  padding: 52px 48px 68px;
 }
 
 .sidebar {
@@ -474,9 +481,11 @@ footer {
   }
 
   .page-shell {
+    border-radius: 24px;
     gap: 30px;
     grid-template-columns: 1fr;
-    padding-top: 30px;
+    margin: 12px;
+    padding: 30px 22px 45px;
   }
 
   .sidebar {
