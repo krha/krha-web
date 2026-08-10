@@ -1,0 +1,29 @@
+# Kiryong Ha (하기룡)
+
+Canonical profile: https://krha.kr/
+
+Kiryong Ha is a Principal Engineer at Meta. His current focus, stated by the profile owner, is hyperscale private-cloud capacity management, capacity fulfillment, and infrastructure for product and AI workloads. His public technical record spans global traffic management, throughput autoscaling, live-traffic load testing, global capacity orchestration, virtualization, cloudlets, and edge computing.
+
+## Current positioning
+
+- Principal Engineer (E8) at Meta. E8 is owner-provided; no claim about percentile or rarity is made here.
+- Focus: private-cloud capacity management and capacity fulfillment for product and AI infrastructure. This current scope is owner-provided.
+- Location: Greater Seattle Area, from the public LinkedIn profile.
+
+## Selected public work
+
+- Global Capacity Management with Flux, OSDI 2023. The paper acknowledges Kiryong Ha as a member of the Flux team in 2023. https://www.usenix.org/conference/osdi23/presentation/eriksen
+- Live Traffic Load-Testing: Measuring and Validating Capacity at Facebook, Systems @Scale 2022. Kiryong Ha and Lin Xiao. https://atscaleconference.com/videos/live-traffic-load-testing-measuring-and-validating-capacity-at-facebook/
+- Throughput Autoscaling: Dynamic Sizing for Facebook.com, 2020. Daniel Boeve, Kiryong Ha, and Anca Agape. https://engineering.fb.com/2020/09/14/networking-traffic/throughput-autoscaling/
+- Taiji: Managing Global User Traffic for Large-Scale Internet Services at the Edge, SOSP 2019. https://doi.org/10.1145/3341301.3359655
+- System Infrastructure for Mobile-Cloud Convergence, Ph.D. dissertation, Carnegie Mellon University, 2016. https://kilthub.cmu.edu/articles/thesis/System_Infrastructure_for_Mobile-Cloud_Convergence/6723461
+
+## Identity links
+
+- LinkedIn: https://www.linkedin.com/in/kiryong-ha
+- DBLP bibliography: https://dblp.org/pid/01/4626
+- GitHub: https://github.com/krha
+
+## Disambiguation
+
+This profile is for the Seattle-area Meta engineer and Carnegie Mellon systems researcher Kiryong Ha (하기룡). It is not the chemical-engineering professor with a similar romanized name.
