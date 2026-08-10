@@ -32,8 +32,11 @@ test("server-renders Kiryong Ha's professional profile", async () => {
   assert.match(html, /Kiryong Ha/);
   assert.match(html, /Principal Engineer/);
   assert.match(html, /capacity fulfillment/i);
-  assert.match(html, /AI infrastructure/i);
+  assert.match(html, /AI\/Non-AI infrastructure/i);
   assert.match(html, /Global Capacity Management with Flux/i);
+  assert.doesNotMatch(html, /What(?:&#x27;|&apos;|')s New/i);
+  assert.ok(html.indexOf(">GitHub<") < html.indexOf(">Scholar<"));
+  assert.ok(html.indexOf('id="career"') < html.indexOf('id="work"'));
   assert.match(html, /application\/ld\+json/);
   assert.match(html, /https:\/\/schema\.org/);
   assert.match(html, /rel="canonical"/);

@@ -8,7 +8,6 @@
   --link-hover: #23527c;
   --border: #dddddd;
   --soft-border: #eeeeee;
-  --well: #f5f5f5;
   --navbar: #f8f8f8;
   --footer: #313131;
   --footer-text: #a7a7a7;
@@ -203,33 +202,6 @@ h3 {
 
 .content {
   min-width: 0;
-}
-
-.news-well {
-  background: var(--well);
-  border: 1px solid #e3e3e3;
-  border-radius: 4px;
-  box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%);
-  margin-bottom: 38px;
-  min-height: 20px;
-  padding: 25px 28px;
-}
-
-.news-well h1 {
-  color: var(--heading);
-  font-family: var(--nav-font);
-  font-size: 27px;
-  font-weight: 600;
-  margin-bottom: 15px;
-}
-
-.news-well ul {
-  margin: 0;
-  padding-left: 23px;
-}
-
-.news-well li + li {
-  margin-top: 7px;
 }
 
 .content-section {
@@ -498,14 +470,6 @@ footer {
 
   .navbar-brand {
     font-size: 16px;
-  }
-
-  .news-well {
-    padding: 21px;
-  }
-
-  .news-well h1 {
-    font-size: 24px;
   }
 
   .focus-grid {

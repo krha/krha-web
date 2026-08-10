@@ -256,47 +256,24 @@ export default function Home() {
               <ExternalLink href="https://www.linkedin.com/in/kiryong-ha">
                 LinkedIn
               </ExternalLink>
+              <ExternalLink href="https://github.com/krha">GitHub</ExternalLink>
               <ExternalLink href="https://scholar.google.com/citations?user=Wj7l5TsAAAAJ&hl=en">
                 Scholar
               </ExternalLink>
-              <ExternalLink href="https://github.com/krha">GitHub</ExternalLink>
             </div>
           </div>
 
           <nav className="section-nav" aria-label="On this page">
             <a href="#about">About</a>
             <a href="#focus">Current Focus</a>
+            <a href="#career">Career</a>
             <a href="#work">Selected Public Work</a>
             <a href="#publications">Selected Publications</a>
-            <a href="#career">Career</a>
             <a href="#patents">Patents &amp; Talks</a>
           </nav>
         </aside>
 
         <div className="content">
-          <section className="news-well" aria-labelledby="news-title">
-            <h1 id="news-title">What&apos;s New!</h1>
-            <ul>
-              <li>
-                <strong>Current:</strong> Principal Engineer (E8) at Meta,
-                focused on private-cloud capacity management, capacity
-                fulfillment, and AI infrastructure.
-              </li>
-              <li>
-                <strong>Jul 2023:</strong> Acknowledged as a Flux team member in
-                the OSDI paper on global capacity management.
-              </li>
-              <li>
-                <strong>Aug 2022:</strong> Presented live traffic load testing at
-                Facebook scale at Systems @Scale.
-              </li>
-              <li>
-                <strong>Sep 2020:</strong> Published Meta Engineering work on
-                throughput autoscaling for Facebook.com.
-              </li>
-            </ul>
-          </section>
-
           <section className="content-section" aria-labelledby="about">
             <SectionTitle id="about">About</SectionTitle>
             <p className="lead">
@@ -332,10 +309,10 @@ export default function Home() {
                 </p>
               </article>
               <article>
-                <h3>AI infrastructure</h3>
+                <h3>AI/Non-AI infrastructure</h3>
                 <p>
-                  Applying private-cloud capacity systems to the specialized
-                  and rapidly changing demands of AI workloads.
+                  Applying private-cloud capacity systems to specialized AI
+                  workloads and the diverse demands of non-AI product services.
                 </p>
               </article>
               <article>
@@ -345,6 +322,33 @@ export default function Home() {
                   traffic, and delivery into reliable operating feedback loops.
                 </p>
               </article>
+            </div>
+          </section>
+
+          <section className="content-section" aria-labelledby="career">
+            <SectionTitle id="career">Career</SectionTitle>
+            <div className="career-list">
+              {career.map((item) => (
+                <article
+                  className="career-item"
+                  key={item.organization + item.period}
+                >
+                  <div className="career-period">{item.period}</div>
+                  <div>
+                    <h3>
+                      {item.href ? (
+                        <ExternalLink href={item.href}>
+                          {item.organization}
+                        </ExternalLink>
+                      ) : (
+                        item.organization
+                      )}
+                    </h3>
+                    <p className="item-meta">{item.role}</p>
+                    <p>{item.detail}</p>
+                  </div>
+                </article>
+              ))}
             </div>
           </section>
 
@@ -399,33 +403,6 @@ export default function Home() {
                 </li>
               ))}
             </ol>
-          </section>
-
-          <section className="content-section" aria-labelledby="career">
-            <SectionTitle id="career">Career</SectionTitle>
-            <div className="career-list">
-              {career.map((item) => (
-                <article
-                  className="career-item"
-                  key={item.organization + item.period}
-                >
-                  <div className="career-period">{item.period}</div>
-                  <div>
-                    <h3>
-                      {item.href ? (
-                        <ExternalLink href={item.href}>
-                          {item.organization}
-                        </ExternalLink>
-                      ) : (
-                        item.organization
-                      )}
-                    </h3>
-                    <p className="item-meta">{item.role}</p>
-                    <p>{item.detail}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
           </section>
 
           <section className="content-section" aria-labelledby="patents">
