@@ -55,13 +55,14 @@ test("server-renders Kiryong Ha's professional profile", async () => {
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Starter Project/);
 });
 
-test("ships crawler and claim-review artifacts", async () => {
-  const [robots, sitemap, llms, notes, packageJson] = await Promise.all([
+test("ships crawler, review, and original-site palette artifacts", async () => {
+  const [robots, sitemap, llms, notes, packageJson, css] = await Promise.all([
     readFile(new URL("../public/robots.txt", import.meta.url), "utf8"),
     readFile(new URL("../public/sitemap.xml", import.meta.url), "utf8"),
     readFile(new URL("../public/llms.txt", import.meta.url), "utf8"),
     readFile(new URL("../REVIEW_NOTES.md", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
   ]);
 
   assert.match(robots, /Sitemap: https:\/\/krha\.kr\/sitemap\.xml/);
@@ -69,4 +70,9 @@ test("ships crawler and claim-review artifacts", async () => {
   assert.match(llms, /Disambiguation/);
   assert.match(notes, /Top 1%/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
+  assert.match(css, /--heading: #333333/);
+  assert.match(css, /--link: #337ab7/);
+  assert.match(css, /--navbar: #f8f8f8/);
+  assert.match(css, /--surface: #f5f5f5/);
+  assert.match(css, /--footer: #313131/);
 });
