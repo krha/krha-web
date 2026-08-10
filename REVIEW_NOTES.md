@@ -4,16 +4,18 @@ Reviewed: 2026-08-10
 
 ## Existing-site audit
 
-The live `https://krha.kr/` endpoint currently presents an invalid, self-signed TLS certificate and could not be opened by a normal browser. Search engines and AI crawlers are likely to have the same trust problem until the certificate and hosting path are corrected.
+The live `http://krha.kr/` site was inspected directly. It uses a Bootstrap 3-era academic layout: a fixed light navbar, circular portrait and section links in a narrow left column, a wider right content column, a light-gray “What's New!” well, and a dark footer. This revision intentionally keeps that recognizable structure and visual language while updating typography, spacing, responsive behavior, content, and discovery metadata.
 
-The most recent accessible public copy was inspected through the Internet Archive. It is a Bootstrap-era academic site last updated around 2015. Its main positioning is “Ph.D. student at Carnegie Mellon University,” and its navigation is About, Publications, Research, CV, and GitHub. Its strengths are a substantive publication list and a clear early research history. Its primary gaps are:
+The existing public copy still describes Kiryong Ha as a “Research Scientist at Facebook,” and its news ends in 2017. Its strengths are a substantive publication list, a clear early research history, and a simple information-first layout. Its primary gaps are:
 
 - current identity and Meta role are absent;
 - the content leads with 2013–2015 cloudlet work rather than current private-cloud capacity work;
 - important public Meta work—Taiji, throughput autoscaling, live traffic load testing, and Flux—is absent;
 - titles and descriptions are generic, with little topic-specific SEO;
 - there is no Person structured data, canonical metadata, sitemap, or AI-readable summary;
-- old HTTP dependencies and the current certificate failure prevent reliable discovery.
+- old HTTP dependencies and the current HTTPS certificate failure prevent reliable discovery.
+
+The `https://krha.kr/` endpoint currently presents an invalid, self-signed TLS certificate. Search engines and AI crawlers are likely to have the same trust problem until the certificate and hosting path are corrected.
 
 ## Claim approval checklist
 
@@ -30,7 +32,8 @@ The website distinguishes public-source claims from statements supplied directly
 - **“Top 1%” / E8 rarity** — no official public Meta source was found. Do not add a percentile until an acceptable source and exact wording are approved.
 - **“Top 10 in the world,” “world-leading expert,” or similar ranking** — not independently verifiable and therefore omitted. The site demonstrates expertise through specific public systems, scale, and roles instead.
 - **Exact Meta start date and internal reporting scope** — omitted because a current public source was not verified.
-- **Current email, downloadable CV, and portrait** — omitted because no current approved assets or contact details were supplied. The archived 2015 portrait was reviewed but is not used.
+- **Current email and downloadable CV** — omitted because no current approved contact details or updated CV were supplied.
+- **Portrait** — the portrait already published on `http://krha.kr/` is reused in the revised site. Replace it if a newer approved headshot is preferred.
 
 ### Public-source wording constraints
 

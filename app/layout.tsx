@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Raleway, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const sourceSans = Source_Sans_3({
+  variable: "--font-source-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const raleway = Raleway({
+  variable: "--font-raleway",
   subsets: ["latin"],
 });
 
@@ -39,9 +39,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Kiryong Ha", url: "https://krha.kr/" }],
   creator: "Kiryong Ha",
   category: "Technology",
-  alternates: {
-    canonical: "/",
-  },
+  alternates: { canonical: "/" },
   openGraph: {
     type: "profile",
     url: "/",
@@ -50,12 +48,21 @@ export const metadata: Metadata = {
     description:
       "Meta Principal Engineer specializing in private-cloud capacity management, capacity fulfillment, AI infrastructure, and distributed systems.",
     locale: "en_US",
+    images: [
+      {
+        url: "/og.png",
+        width: 1730,
+        height: 909,
+        alt: "Kiryong Ha, Principal Engineer at Meta",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Kiryong Ha | Capacity & AI Infrastructure at Hyperscale",
     description:
       "Meta Principal Engineer specializing in private-cloud capacity management, capacity fulfillment, AI infrastructure, and distributed systems.",
+    images: ["/og.png"],
   },
   robots: {
     index: true,
@@ -76,12 +83,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${sourceSans.variable} ${raleway.variable}`}>
         {children}
       </body>
     </html>
