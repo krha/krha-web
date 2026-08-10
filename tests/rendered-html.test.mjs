@@ -32,6 +32,7 @@ test("server-renders Kiryong Ha's professional profile", async () => {
   assert.match(html, /Kiryong Ha/);
   assert.match(html, /Principal Engineer/);
   assert.match(html, /capacity fulfillment/i);
+  assert.match(html, /hyper-scale products like Facebook and Instagram/i);
   assert.match(html, /AI\/Non-AI infrastructure/i);
   assert.match(html, /Global Capacity Management with Flux/i);
   assert.doesNotMatch(html, /What(?:&#x27;|&apos;|')s New/i);

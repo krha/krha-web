@@ -85,7 +85,7 @@ const career = [
     organization: "Meta",
     role: "Principal Engineer (E8)",
     detail:
-      "Private-cloud capacity management and capacity fulfillment for product and AI infrastructure.",
+      "Private-cloud capacity management and capacity fulfillment for hyper-scale products like Facebook and Instagram.",
   },
   {
     period: "2011–2016",
