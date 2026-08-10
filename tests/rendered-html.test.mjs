@@ -44,7 +44,8 @@ test("server-renders Kiryong Ha's professional profile", async () => {
     /https:\/\/research\.facebook\.com\/fellows\/ha-kiryong\//,
   );
   assert.doesNotMatch(html, /What(?:&#x27;|&apos;|')s New/i);
-  assert.ok(html.indexOf(">GitHub<") < html.indexOf(">Scholar<"));
+  assert.match(html, /Private Cloud Capacity (?:&amp;|&) Fulfillment Infrastructure/);
+  assert.doesNotMatch(html, />Scholar</);
   assert.ok(html.indexOf(">Career<") < html.indexOf(">Research<"));
   assert.ok(html.indexOf(">Research<") < html.indexOf(">Publications<"));
   assert.ok(html.indexOf('id="career"') < html.indexOf('id="work"'));

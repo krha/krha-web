@@ -251,16 +251,13 @@ export default function Home() {
             <p className="profile-role">
               Principal Engineer (E8) at Meta
               <br />
-              Private Cloud Capacity &amp; AI Infrastructure
+              Private Cloud Capacity &amp; Fulfillment Infrastructure
             </p>
             <div className="profile-links" aria-label="External profiles">
               <ExternalLink href="https://www.linkedin.com/in/kiryong-ha">
                 LinkedIn
               </ExternalLink>
               <ExternalLink href="https://github.com/krha">GitHub</ExternalLink>
-              <ExternalLink href="https://scholar.google.com/citations?user=Wj7l5TsAAAAJ&hl=en">
-                Scholar
-              </ExternalLink>
             </div>
           </div>
 
