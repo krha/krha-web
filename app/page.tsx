@@ -109,6 +109,7 @@ const career = [
     role: "Research Staff",
     detail:
       "Virtualization, on-demand computing, and context-aware healthcare systems.",
+    href: "https://www.etri.re.kr/eng/main/main.etri",
   },
   {
     period: "2000–2007",

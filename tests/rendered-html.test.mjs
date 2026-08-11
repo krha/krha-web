@@ -49,6 +49,10 @@ test("server-renders Kiryong Ha's professional profile", async () => {
     html,
     /https:\/\/research\.facebook\.com\/fellows\/ha-kiryong\//,
   );
+  assert.match(
+    html,
+    /https:\/\/www\.etri\.re\.kr\/eng\/main\/main\.etri/,
+  );
   assert.doesNotMatch(html, /What(?:&#x27;|&apos;|')s New/i);
   assert.match(html, /Private Cloud Capacity (?:&amp;|&) Fulfillment Infrastructure/);
   assert.doesNotMatch(html, />Scholar</);
