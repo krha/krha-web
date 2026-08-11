@@ -17,9 +17,9 @@
   --surface-accent: #cccccc;
   --footer: #313131;
   --footer-text: #999999;
-  --body-font: var(--font-source-sans), "Helvetica Neue", Helvetica, Arial,
+  --body-font: var(--font-manrope), "Helvetica Neue", Helvetica, Arial,
     sans-serif;
-  --nav-font: var(--font-raleway), "Helvetica Neue", Helvetica, Arial,
+  --nav-font: var(--font-manrope), "Helvetica Neue", Helvetica, Arial,
     sans-serif;
 }
 

@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
-import { Raleway, Source_Sans_3 } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 
-const sourceSans = Source_Sans_3({
-  variable: "--font-source-sans",
-  subsets: ["latin"],
-});
-
-const raleway = Raleway({
-  variable: "--font-raleway",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
 });
 
@@ -86,9 +81,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${sourceSans.variable} ${raleway.variable}`}>
-        {children}
-      </body>
+      <body className={manrope.variable}>{children}</body>
     </html>
   );
 }
