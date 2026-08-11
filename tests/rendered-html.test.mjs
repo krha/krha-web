@@ -63,6 +63,8 @@ test("server-renders Kiryong Ha's professional profile", async () => {
   assert.match(html, /application\/ld\+json/);
   assert.match(html, /https:\/\/schema\.org/);
   assert.match(html, /rel="canonical"/);
+  assert.match(html, /<html[^>]+class="__variable_manrope_[^"]+"/i);
+  assert.doesNotMatch(html, /<body[^>]+class="__variable_manrope_/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Starter Project/);
 });
 
