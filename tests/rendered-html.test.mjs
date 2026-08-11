@@ -69,46 +69,21 @@ test("server-renders Kiryong Ha's professional profile", async () => {
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Starter Project/);
 });
 
-test("removes the rejected URLs and renders ten isolated design concepts", async () => {
-  const removedResponses = await Promise.all([
-    render("/design-10"),
-    render("/design-15"),
-  ]);
-
-  for (const response of removedResponses) {
-    assert.equal(response.status, 404);
-  }
-
+test("keeps every retired design preview URL removed", async () => {
   const conceptPaths = Array.from(
     { length: 10 },
     (_, index) => `/concept-${String(index + 1).padStart(2, "0")}`,
   );
-  const responses = await Promise.all(conceptPaths.map((path) => render(path)));
+  const retiredPaths = [
+    "/design-10",
+    "/design-15",
+    "/design-lab",
+    ...conceptPaths,
+  ];
+  const responses = await Promise.all(retiredPaths.map((path) => render(path)));
 
-  for (const [index, response] of responses.entries()) {
-    assert.equal(response.status, 200);
-    const html = await response.text();
-    assert.match(html, /Principal Engineer \(E8\)/);
-    assert.match(html, /Hyperscale capacity infrastructure/);
-    assert.match(html, /Global Capacity Management with Flux/);
-    assert.match(html, /name="robots" content="noindex, nofollow"/i);
-    const conceptId = String(index + 1).padStart(2, "0");
-    assert.match(html, new RegExp(`concept-page concept-${conceptId}`));
-    assert.match(html, new RegExp(`data-concept="${conceptId}"`));
-  }
-});
-
-test("renders a noindex comparison lab linking all ten concepts", async () => {
-  const response = await render("/design-lab");
-  assert.equal(response.status, 200);
-  const html = await response.text();
-
-  assert.match(html, /Design Lab/);
-  assert.match(html, /name="robots" content="noindex, nofollow"/i);
-  for (let index = 1; index <= 10; index += 1) {
-    const conceptId = String(index).padStart(2, "0");
-    assert.match(html, new RegExp(`href="/concept-${conceptId}"`));
-    assert.match(html, new RegExp(`src="/concept-${conceptId}"`));
+  for (const response of responses) {
+    assert.equal(response.status, 404);
   }
 });
 
