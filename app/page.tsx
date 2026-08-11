@@ -307,10 +307,10 @@ export default function Home() {
                 </p>
               </article>
               <article>
-                <h3>AI/Non-AI infrastructure</h3>
+                <h3>Hyperscale Capacity Infrastructure</h3>
                 <p>
-                  Applying private-cloud capacity systems to specialized AI
-                  workloads and the diverse demands of non-AI product services.
+                  Building private-cloud capacity management and fulfillment
+                  systems for Meta products such as Facebook and Instagram.
                 </p>
               </article>
               <article>
