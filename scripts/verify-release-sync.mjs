@@ -1,6 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { resolve4 } from "node:dns/promises";
 import { request as httpsRequest } from "node:https";
+import { isIP } from "node:net";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -93,6 +94,87 @@ function requestUsingAddress(url, address) {
   });
 }
 
+function resolveWithDnsOverHttps(hostname) {
+  return new Promise((resolveRequest, rejectRequest) => {
+    const request = httpsRequest(
+      {
+        headers: {
+          accept: "application/dns-json",
+          host: "cloudflare-dns.com",
+        },
+        host: "1.1.1.1",
+        path: `/dns-query?name=${encodeURIComponent(hostname)}&type=A`,
+        servername: "cloudflare-dns.com",
+      },
+      (response) => {
+        let body = "";
+        response.setEncoding("utf8");
+        response.on("data", (chunk) => {
+          body += chunk;
+          if (Buffer.byteLength(body) > maximumResponseBytes) {
+            response.destroy(new Error("DNS response exceeded the size limit"));
+          }
+        });
+        response.on("error", rejectRequest);
+        response.on("end", () => {
+          if (response.statusCode !== 200) {
+            rejectRequest(
+              new Error(`DNS-over-HTTPS returned HTTP ${response.statusCode ?? 0}`),
+            );
+            return;
+          }
+
+          try {
+            const result = JSON.parse(body);
+            const addresses = (result.Answer ?? [])
+              .filter((answer) => answer.type === 1 && isIP(answer.data) === 4)
+              .map((answer) => answer.data);
+            if (result.Status !== 0 || addresses.length === 0) {
+              rejectRequest(new Error("DNS-over-HTTPS returned no A records"));
+              return;
+            }
+            resolveRequest(addresses);
+          } catch (error) {
+            rejectRequest(
+              new Error(
+                `DNS-over-HTTPS returned invalid JSON (${error instanceof Error ? error.message : String(error)})`,
+              ),
+            );
+          }
+        });
+      },
+    );
+
+    request.setTimeout(requestTimeoutMs, () => {
+      request.destroy(new Error(`DNS request timed out after ${requestTimeoutMs}ms`));
+    });
+    request.on("error", rejectRequest);
+    request.end();
+  });
+}
+
+async function resolveLiveAddresses(hostname) {
+  try {
+    const addresses = await resolve4(hostname);
+    if (addresses.length > 0) {
+      return { addresses, resolver: "system DNS" };
+    }
+  } catch {
+    // Some macOS resolver paths return ENODATA even when public A records exist.
+  }
+
+  try {
+    return {
+      addresses: await resolveWithDnsOverHttps(hostname),
+      resolver: "DNS-over-HTTPS",
+    };
+  } catch (dnsError) {
+    fail(
+      `${liveVersionUrl} DNS lookup failed (${dnsError instanceof Error ? dnsError.message : String(dnsError)})`,
+    );
+  }
+}
+
 async function fetchLiveVersion(expectedCommit) {
   const cacheBustedUrl = `${liveVersionUrl}?verify=${encodeURIComponent(expectedCommit)}`;
 
@@ -119,14 +201,9 @@ async function fetchLiveVersion(expectedCommit) {
       throw error;
     }
 
-    let addresses;
-    try {
-      addresses = await resolve4(new URL(liveVersionUrl).hostname);
-    } catch (dnsError) {
-      fail(
-        `${liveVersionUrl} DNS lookup failed (${dnsError instanceof Error ? dnsError.message : String(dnsError)})`,
-      );
-    }
+    const { addresses, resolver } = await resolveLiveAddresses(
+      new URL(liveVersionUrl).hostname,
+    );
     const transportErrors = [];
     for (const address of addresses) {
       try {
@@ -139,7 +216,7 @@ async function fetchLiveVersion(expectedCommit) {
           `${liveVersionUrl} via ${address}`,
           expectedCommit,
         );
-        return `DNS A record ${address}`;
+        return `${resolver} A record ${address}`;
       } catch (directError) {
         if (
           directError instanceof Error &&
