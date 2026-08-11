@@ -38,3 +38,6 @@ yarn-error.log*
 /.wrangler/
 /outputs/
 /work/
+
+# Generated during production builds so the live site exposes its source SHA.
+/public/site-version.json

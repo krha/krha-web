@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
@@ -115,4 +116,24 @@ test("ships crawler, review, and original-site palette artifacts", async () => {
   assert.match(css, /\.about-details\s*{\s*margin-top: 26px;/);
   assert.match(css, /border-radius: 32px/);
   assert.match(css, /--footer: #313131/);
+});
+
+test("embeds the exact Git commit in the production build", async () => {
+  const [publicVersion, builtVersion] = await Promise.all([
+    readFile(new URL("../public/site-version.json", import.meta.url), "utf8"),
+    readFile(new URL("../dist/client/site-version.json", import.meta.url), "utf8"),
+  ]);
+  const expectedCommit = execFileSync("git", ["rev-parse", "HEAD"], {
+    cwd: new URL("..", import.meta.url),
+    encoding: "utf8",
+  }).trim();
+  const expectedRepository = "https://github.com/krha/krha-web";
+
+  assert.deepEqual(JSON.parse(builtVersion), JSON.parse(publicVersion));
+  assert.equal(JSON.parse(builtVersion).commit, expectedCommit);
+  assert.equal(JSON.parse(builtVersion).repository, expectedRepository);
+  assert.equal(
+    JSON.parse(builtVersion).commitUrl,
+    `${expectedRepository}/commit/${expectedCommit}`,
+  );
 });

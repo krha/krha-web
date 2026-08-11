@@ -41,7 +41,27 @@ The development server prints the local preview URL when it starts.
 | `npm run build` | Create a production build |
 | `npm test` | Build the site and validate the rendered HTML |
 | `npm run lint` | Run the code-quality checks |
+| `npm run verify:release` | Confirm local, GitHub, and live-site commits match |
 | `npm start` | Run the production build locally |
+
+## Release synchronization
+
+GitHub [`krha/krha-web`](https://github.com/krha/krha-web) on `main` is the
+canonical source. A public release is complete only after the same commit has
+been pushed to GitHub and deployed through Sites. Project-level release rules
+in `AGENTS.md` require Codex to stop rather than deploy when those commits do
+not match.
+
+Production builds publish the deployed source commit at
+[`https://krha.kr/site-version.json`](https://krha.kr/site-version.json). After
+a deployment, verify all three copies with:
+
+```bash
+npm run verify:release
+```
+
+The command fails if the local checkout, GitHub `main`, or the live site refers
+to a different commit.
 
 ## Project structure
 
