@@ -65,35 +65,51 @@ test("server-renders Kiryong Ha's professional profile", async () => {
   assert.match(html, /rel="canonical"/);
   assert.match(html, /<html[^>]+class="__variable_manrope_[^"]+"/i);
   assert.doesNotMatch(html, /<body[^>]+class="__variable_manrope_/i);
-  assert.doesNotMatch(html, /design-preview--(?:10|15)/i);
+  assert.doesNotMatch(html, /concept-page|concept-(?:0[1-9]|10)/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Starter Project/);
 });
 
-test("keeps the main page unchanged while rendering both design previews", async () => {
-  const [design10Response, design15Response] = await Promise.all([
+test("removes the rejected URLs and renders ten isolated design concepts", async () => {
+  const removedResponses = await Promise.all([
     render("/design-10"),
     render("/design-15"),
   ]);
 
-  assert.equal(design10Response.status, 200);
-  assert.equal(design15Response.status, 200);
+  for (const response of removedResponses) {
+    assert.equal(response.status, 404);
+  }
 
-  const [design10, design15] = await Promise.all([
-    design10Response.text(),
-    design15Response.text(),
-  ]);
+  const conceptPaths = Array.from(
+    { length: 10 },
+    (_, index) => `/concept-${String(index + 1).padStart(2, "0")}`,
+  );
+  const responses = await Promise.all(conceptPaths.map((path) => render(path)));
 
-  for (const html of [design10, design15]) {
+  for (const [index, response] of responses.entries()) {
+    assert.equal(response.status, 200);
+    const html = await response.text();
     assert.match(html, /Principal Engineer \(E8\)/);
     assert.match(html, /Hyperscale capacity infrastructure/);
     assert.match(html, /Global Capacity Management with Flux/);
     assert.match(html, /name="robots" content="noindex, nofollow"/i);
+    const conceptId = String(index + 1).padStart(2, "0");
+    assert.match(html, new RegExp(`concept-page concept-${conceptId}`));
+    assert.match(html, new RegExp(`data-concept="${conceptId}"`));
   }
+});
 
-  assert.match(design10, /design-preview--10/);
-  assert.doesNotMatch(design10, /design-preview--15/);
-  assert.match(design15, /design-preview--15/);
-  assert.doesNotMatch(design15, /design-preview--10/);
+test("renders a noindex comparison lab linking all ten concepts", async () => {
+  const response = await render("/design-lab");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+
+  assert.match(html, /Design Lab/);
+  assert.match(html, /name="robots" content="noindex, nofollow"/i);
+  for (let index = 1; index <= 10; index += 1) {
+    const conceptId = String(index).padStart(2, "0");
+    assert.match(html, new RegExp(`href="/concept-${conceptId}"`));
+    assert.match(html, new RegExp(`src="/concept-${conceptId}"`));
+  }
 });
 
 test("ships crawler, review, and original-site palette artifacts", async () => {
