@@ -87,7 +87,10 @@ test("ships crawler, review, and original-site palette artifacts", async () => {
   assert.match(css, /--panel: #f4f4f4/);
   assert.match(css, /--navbar: #303030/);
   assert.match(css, /--surface: #ffffff/);
-  assert.match(css, /\.about-highlight/);
+  assert.match(
+    css,
+    /\.about-highlight\s*{\s*color: var\(--heading\);\s*font-weight: 600;\s*margin-bottom: 0;\s*}/,
+  );
   assert.match(css, /\.about-details\s*{\s*margin-top: 26px;/);
   assert.match(css, /border-radius: 32px/);
   assert.match(css, /--footer: #313131/);
