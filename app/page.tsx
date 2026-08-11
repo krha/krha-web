@@ -274,12 +274,12 @@ export default function Home() {
         <div className="content">
           <section className="content-section" aria-labelledby="about">
             <SectionTitle id="about">About</SectionTitle>
-            <p className="lead">
+            <p className="lead about-highlight">
               I am a Principal Engineer (E8) at Meta currently working on
               hyperscale capacity management and capacity fulfillment for
               Meta&apos;s private cloud.
             </p>
-            <p>
+            <p className="about-details">
               My work focuses on turning demand forecasts, measured supply,
               service constraints, and infrastructure availability into
               reliable capacity decisions. The goal is straightforward to

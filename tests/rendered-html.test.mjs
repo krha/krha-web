@@ -36,6 +36,8 @@ test("server-renders Kiryong Ha's professional profile", async () => {
     /Principal Engineer \(E8\) at Meta currently working on\s+hyperscale capacity management and capacity fulfillment for\s+Meta(?:&#x27;|&apos;|')s private cloud/i,
   );
   assert.match(html, /capacity fulfillment/i);
+  assert.match(html, /class="lead about-highlight"/i);
+  assert.match(html, /class="about-details"/i);
   assert.match(html, /hyper-scale products like Facebook and Instagram/i);
   assert.match(html, /Hyperscale Capacity Infrastructure/i);
   assert.match(
@@ -80,6 +82,8 @@ test("ships crawler, review, and original-site palette artifacts", async () => {
   assert.match(css, /--panel: #f4f4f4/);
   assert.match(css, /--navbar: #303030/);
   assert.match(css, /--surface: #ffffff/);
+  assert.match(css, /\.about-highlight/);
+  assert.match(css, /\.about-details\s*{\s*margin-top: 26px;/);
   assert.match(css, /border-radius: 32px/);
   assert.match(css, /--footer: #313131/);
 });
