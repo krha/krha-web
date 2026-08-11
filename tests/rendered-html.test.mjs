@@ -39,7 +39,7 @@ test("server-renders Kiryong Ha's professional profile", async () => {
   assert.match(html, /class="lead about-highlight"/i);
   assert.match(html, /class="about-details"/i);
   assert.match(html, /hyper-scale products like Facebook and Instagram/i);
-  assert.match(html, /Hyperscale Capacity Infrastructure/i);
+  assert.match(html, /Hyperscale capacity infrastructure/);
   assert.match(
     html,
     /Building private-cloud capacity management and fulfillment\s+systems for Meta products such as Facebook and Instagram/i,

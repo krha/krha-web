@@ -309,7 +309,7 @@ export default function Home() {
                 </p>
               </article>
               <article>
-                <h3>Hyperscale Capacity Infrastructure</h3>
+                <h3>Hyperscale capacity infrastructure</h3>
                 <p>
                   Building private-cloud capacity management and fulfillment
                   systems for Meta products such as Facebook and Instagram.
