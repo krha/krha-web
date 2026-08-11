@@ -116,6 +116,7 @@ const career = [
     organization: "KAIST",
     role: "B.S., EECS · M.S., BioSystems",
     detail: "Computing systems, signals, and applied research.",
+    href: "https://kaist.ac.kr/en/",
   },
 ];
 
