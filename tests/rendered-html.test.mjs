@@ -2,13 +2,13 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-async function render() {
+async function render(pathname = "/") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
 
   return worker.fetch(
-    new Request("http://localhost/", {
+    new Request(new URL(pathname, "http://localhost/"), {
       headers: { accept: "text/html" },
     }),
     {
@@ -65,7 +65,35 @@ test("server-renders Kiryong Ha's professional profile", async () => {
   assert.match(html, /rel="canonical"/);
   assert.match(html, /<html[^>]+class="__variable_manrope_[^"]+"/i);
   assert.doesNotMatch(html, /<body[^>]+class="__variable_manrope_/i);
+  assert.doesNotMatch(html, /design-preview--(?:10|15)/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Starter Project/);
+});
+
+test("keeps the main page unchanged while rendering both design previews", async () => {
+  const [design10Response, design15Response] = await Promise.all([
+    render("/design-10"),
+    render("/design-15"),
+  ]);
+
+  assert.equal(design10Response.status, 200);
+  assert.equal(design15Response.status, 200);
+
+  const [design10, design15] = await Promise.all([
+    design10Response.text(),
+    design15Response.text(),
+  ]);
+
+  for (const html of [design10, design15]) {
+    assert.match(html, /Principal Engineer \(E8\)/);
+    assert.match(html, /Hyperscale capacity infrastructure/);
+    assert.match(html, /Global Capacity Management with Flux/);
+    assert.match(html, /name="robots" content="noindex, nofollow"/i);
+  }
+
+  assert.match(design10, /design-preview--10/);
+  assert.doesNotMatch(design10, /design-preview--15/);
+  assert.match(design15, /design-preview--15/);
+  assert.doesNotMatch(design15, /design-preview--10/);
 });
 
 test("ships crawler, review, and original-site palette artifacts", async () => {
