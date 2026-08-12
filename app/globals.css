@@ -399,7 +399,11 @@ h3 {
 }
 
 .career-item {
-  grid-template-columns: 100px minmax(0, 1fr);
+  grid-template-columns: 120px minmax(0, 1fr);
+}
+
+.career-period {
+  white-space: nowrap;
 }
 
 .subheading {

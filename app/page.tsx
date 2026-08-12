@@ -81,7 +81,7 @@ const publications = [
 
 const career = [
   {
-    period: "Current",
+    period: "2017-Present",
     organization: "Meta",
     role: "Principal Engineer (E8)",
     detail:
