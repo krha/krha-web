@@ -69,6 +69,32 @@ test("server-renders Kiryong Ha's professional profile", async () => {
   assert.doesNotMatch(html, /<body[^>]+class="__variable_manrope_/i);
   assert.doesNotMatch(html, /concept-page|concept-(?:0[1-9]|10)/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Starter Project/);
+  assert.match(html, /data-analytics-outbound="profile"/i);
+  assert.match(html, /data-analytics-outbound="publication"/i);
+  assert.match(html, /data-analytics-section="career"/i);
+  assert.match(html, /href="\/privacy"/i);
+});
+
+test("publishes a precise analytics privacy notice and browser opt-out", async () => {
+  const response = await render("/privacy");
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+
+  const html = await response.text();
+  assert.match(html, /Privacy at krha\.kr/);
+  assert.match(html, /aggregate audience trends/i);
+  assert.match(html, /does not store names, email addresses/i);
+  assert.match(html, /exact IP addresses/i);
+  assert.match(html, /visitor or session identifier/i);
+  assert.match(html, /raw referring hostname is not sent or stored/i);
+  assert.match(html, /fixed outbound-link list/i);
+  assert.match(html, /Global Privacy Control/i);
+  assert.match(html, /Do Not Track/i);
+  assert.match(html, /Turn analytics off/i);
+  assert.match(html, /__cf_bm/);
+  assert.match(html, /rolling window of up to 400 days/i);
+  assert.match(html, /every dashboard breakdown/i);
+  assert.doesNotMatch(html, /Google Analytics|session replay provider|advertising pixel/i);
 });
 
 test("keeps every retired design preview URL removed", async () => {
@@ -89,18 +115,30 @@ test("keeps every retired design preview URL removed", async () => {
   }
 });
 
-test("ships crawler, review, and original-site palette artifacts", async () => {
-  const [robots, sitemap, llms, notes, packageJson, css] = await Promise.all([
+test("ships crawler, privacy, migration, review, and original-site palette artifacts", async () => {
+  const [robots, sitemap, llms, notes, packageJson, css, hosting, migration, rateLimitMigration] = await Promise.all([
     readFile(new URL("../public/robots.txt", import.meta.url), "utf8"),
     readFile(new URL("../public/sitemap.xml", import.meta.url), "utf8"),
     readFile(new URL("../public/llms.txt", import.meta.url), "utf8"),
     readFile(new URL("../REVIEW_NOTES.md", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+    readFile(new URL("../.openai/hosting.json", import.meta.url), "utf8"),
+    readFile(
+      new URL("../drizzle/0000_steep_lady_mastermind.sql", import.meta.url),
+      "utf8",
+    ),
+    readFile(
+      new URL("../drizzle/0001_motionless_warbound.sql", import.meta.url),
+      "utf8",
+    ),
   ]);
 
   assert.match(robots, /Sitemap: https:\/\/krha\.kr\/sitemap\.xml/);
+  assert.match(robots, /Disallow: \/analytics/);
+  assert.match(robots, /Disallow: \/api\/analytics/);
   assert.match(sitemap, /<loc>https:\/\/krha\.kr\/<\/loc>/);
+  assert.match(sitemap, /<loc>https:\/\/krha\.kr\/privacy<\/loc>/);
   assert.match(llms, /Disambiguation/);
   assert.match(notes, /Top 1%/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
@@ -117,6 +155,33 @@ test("ships crawler, review, and original-site palette artifacts", async () => {
   assert.match(css, /\.about-details\s*{\s*margin-top: 26px;/);
   assert.match(css, /border-radius: 32px/);
   assert.match(css, /--footer: #313131/);
+  assert.equal(JSON.parse(hosting).d1, "DB");
+  assert.match(migration, /CREATE TABLE `analytics_counts`/);
+  assert.match(migration, /PRIMARY KEY\(`bucket`, `dimension`, `value`\)/);
+  assert.doesNotMatch(migration, /visitor_id|session_id|ip_address|user_agent/i);
+  assert.match(rateLimitMigration, /CREATE TABLE `analytics_ingest_limits`/);
+  assert.doesNotMatch(rateLimitMigration, /visitor_id|session_id|ip_address|user_agent/i);
+});
+
+test("packages the analytics migration with the production site", async () => {
+  const [packagedCounts, packagedRateLimit] = await Promise.all([
+    readFile(
+      new URL(
+        "../dist/.openai/drizzle/0000_steep_lady_mastermind.sql",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+    readFile(
+      new URL(
+        "../dist/.openai/drizzle/0001_motionless_warbound.sql",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  ]);
+  assert.match(packagedCounts, /CREATE TABLE `analytics_counts`/);
+  assert.match(packagedRateLimit, /CREATE TABLE `analytics_ingest_limits`/);
 });
 
 test("embeds the exact Git commit in the production build", async () => {

@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
+import type { OutboundGroup } from "./analytics/model";
 
 const publicWork = [
   {
@@ -195,13 +197,21 @@ function ExternalLink({
   href,
   children,
   className = "",
+  analyticsGroup = "other",
 }: {
   href: string;
   children: ReactNode;
   className?: string;
+  analyticsGroup?: OutboundGroup;
 }) {
   return (
-    <a className={className} href={href} target="_blank" rel="noreferrer">
+    <a
+      className={className}
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      data-analytics-outbound={analyticsGroup}
+    >
       {children}
       <span className="external-mark" aria-hidden="true">
         ↗
@@ -230,10 +240,13 @@ export default function Home() {
             Kiryong Ha <span>(하기룡)</span>
           </a>
           <nav aria-label="Primary navigation">
-            <a href="#career">Career</a>
-            <a href="#work">Research</a>
-            <a href="#publications">Publications</a>
-            <ExternalLink href="https://www.linkedin.com/in/kiryong-ha">
+            <a href="#career" data-analytics-section="career">Career</a>
+            <a href="#work" data-analytics-section="work">Research</a>
+            <a href="#publications" data-analytics-section="publications">Publications</a>
+            <ExternalLink
+              href="https://www.linkedin.com/in/kiryong-ha"
+              analyticsGroup="navigation"
+            >
               LinkedIn
             </ExternalLink>
           </nav>
@@ -256,20 +269,25 @@ export default function Home() {
               Private Cloud Capacity &amp; Fulfillment Infrastructure
             </p>
             <div className="profile-links" aria-label="External profiles">
-              <ExternalLink href="https://www.linkedin.com/in/kiryong-ha">
+              <ExternalLink
+                href="https://www.linkedin.com/in/kiryong-ha"
+                analyticsGroup="profile"
+              >
                 LinkedIn
               </ExternalLink>
-              <ExternalLink href="https://github.com/krha">GitHub</ExternalLink>
+              <ExternalLink href="https://github.com/krha" analyticsGroup="profile">
+                GitHub
+              </ExternalLink>
             </div>
           </div>
 
           <nav className="section-nav" aria-label="On this page">
             <a href="#about">About</a>
-            <a href="#focus">Current Focus</a>
-            <a href="#career">Career</a>
-            <a href="#work">Selected Public Work</a>
-            <a href="#publications">Selected Publications</a>
-            <a href="#patents">Patents &amp; Talks</a>
+            <a href="#focus" data-analytics-section="focus">Current Focus</a>
+            <a href="#career" data-analytics-section="career">Career</a>
+            <a href="#work" data-analytics-section="work">Selected Public Work</a>
+            <a href="#publications" data-analytics-section="publications">Selected Publications</a>
+            <a href="#patents" data-analytics-section="patents">Patents &amp; Talks</a>
           </nav>
         </aside>
 
@@ -337,7 +355,7 @@ export default function Home() {
                   <div>
                     <h3>
                       {item.href ? (
-                        <ExternalLink href={item.href}>
+                        <ExternalLink href={item.href} analyticsGroup="career">
                           {item.organization}
                         </ExternalLink>
                       ) : (
@@ -362,7 +380,11 @@ export default function Home() {
                     <h3>{item.title}</h3>
                     <p className="item-meta">{item.role}</p>
                     <p>{item.description}</p>
-                    <ExternalLink className="source-link" href={item.href}>
+                    <ExternalLink
+                      className="source-link"
+                      href={item.href}
+                      analyticsGroup="work"
+                    >
                       {item.linkLabel}
                     </ExternalLink>
                   </div>
@@ -378,13 +400,21 @@ export default function Home() {
               record on{
               " "
               }
-              <ExternalLink href="https://dblp.org/pid/01/4626">DBLP</ExternalLink>{
+              <ExternalLink
+                href="https://dblp.org/pid/01/4626"
+                analyticsGroup="publication"
+              >
+                DBLP
+              </ExternalLink>{
               " "
               }
               or{
               " "
               }
-              <ExternalLink href="https://scholar.google.com/citations?user=Wj7l5TsAAAAJ&hl=en">
+              <ExternalLink
+                href="https://scholar.google.com/citations?user=Wj7l5TsAAAAJ&hl=en"
+                analyticsGroup="publication"
+              >
                 Google Scholar
               </ExternalLink>
               .
@@ -393,7 +423,10 @@ export default function Home() {
               {publications.map((publication) => (
                 <li key={publication.title}>
                   <div>
-                    <ExternalLink href={publication.href}>
+                    <ExternalLink
+                      href={publication.href}
+                      analyticsGroup="publication"
+                    >
                       {publication.title}
                     </ExternalLink>
                     <p>
@@ -411,7 +444,9 @@ export default function Home() {
             <ul className="plain-list">
               {patents.map((patent) => (
                 <li key={patent.number}>
-                  <ExternalLink href={patent.href}>{patent.title}</ExternalLink>
+                  <ExternalLink href={patent.href} analyticsGroup="patent">
+                    {patent.title}
+                  </ExternalLink>
                   <span>
                     {patent.number} · {patent.year}
                   </span>
@@ -421,14 +456,20 @@ export default function Home() {
             <h3 className="subheading talks-heading">Selected talks</h3>
             <ul className="plain-list">
               <li>
-                <ExternalLink href="https://atscaleconference.com/videos/live-traffic-load-testing-measuring-and-validating-capacity-at-facebook/">
+                <ExternalLink
+                  href="https://atscaleconference.com/videos/live-traffic-load-testing-measuring-and-validating-capacity-at-facebook/"
+                  analyticsGroup="talk"
+                >
                   Live Traffic Load Testing: Measuring and Validating Capacity at
                   Facebook
                 </ExternalLink>
                 <span>Systems @Scale · 2022</span>
               </li>
               <li>
-                <ExternalLink href="https://www.cmu.edu/cylab/news_events/events/2013/ha-jit-provisioning.html">
+                <ExternalLink
+                  href="https://www.cmu.edu/cylab/news_events/events/2013/ha-jit-provisioning.html"
+                  analyticsGroup="talk"
+                >
                   Just-in-Time Provisioning for Cyber Foraging
                 </ExternalLink>
                 <span>Carnegie Mellon University · 2013</span>
@@ -444,6 +485,7 @@ export default function Home() {
           <p>
             Principal Engineer · Private Cloud Capacity · AI Infrastructure
           </p>
+          <p className="footer-links"><Link href="/privacy">Privacy</Link></p>
         </div>
       </footer>
     </>

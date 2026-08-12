@@ -12,6 +12,7 @@ management, capacity fulfillment, distributed systems, and edge computing.
   autoscaling
 - Peer-reviewed publications
 - Selected patents and talks
+- Privacy-preserving, aggregate visitor analytics
 
 ## Technology
 
@@ -19,6 +20,7 @@ management, capacity fulfillment, distributed systems, and edge computing.
 - [vinext](https://github.com/cloudflare/vinext) and Vite
 - Responsive, hand-authored CSS with Manrope typography
 - Cloudflare Worker-compatible deployment through Sites
+- First-party aggregate counters in Sites D1
 
 ## Local development
 
@@ -28,10 +30,15 @@ Node.js 22.13 or newer is required.
 git clone git@github.com:krha/krha-web.git
 cd krha-web
 npm install
+cp .env.example .env.local
 npm run dev
 ```
 
-The development server prints the local preview URL when it starts.
+Set `ANALYTICS_OWNER_EMAILS` in `.env.local` to the ChatGPT account email that
+may open the private `/analytics` dashboard during local development. Production
+uses the owner's stable account ID in `ANALYTICS_OWNER_IDS`, managed in Sites and
+never committed. The development server prints the local preview URL when it
+starts.
 
 ## Commands
 
@@ -41,6 +48,7 @@ The development server prints the local preview URL when it starts.
 | `npm run build` | Create a production build |
 | `npm test` | Build the site and validate the rendered HTML |
 | `npm run lint` | Run the code-quality checks |
+| `npm run db:generate` | Generate a D1 migration after an analytics schema change |
 | `npm run verify:release` | Confirm local, GitHub, and live-site commits match |
 | `npm start` | Run the production build locally |
 
@@ -70,8 +78,22 @@ to a different commit.
 | `app/page.tsx` | Homepage content and section structure |
 | `app/globals.css` | Site-wide visual design and responsive styles |
 | `app/layout.tsx` | Page metadata, social previews, and search metadata |
+| `app/analytics/` | Aggregate tracker, private dashboard, and reporting logic |
+| `app/privacy/` | Public analytics and hosting privacy notice |
+| `app/api/analytics/` | Same-origin endpoint for aggregate counters |
+| `db/` and `drizzle/` | Aggregate-only D1 schema and migrations |
 | `public/` | Profile image, social image, favicon, sitemap, and crawler files |
 | `tests/` | Rendered-page validation |
 | `.openai/hosting.json` | Sites deployment configuration |
 
 The production site is available at [krha.kr](https://krha.kr/).
+
+## Analytics privacy model
+
+The site records only aggregate daily counters for page paths, fixed referring
+categories, coarse audience categories, section engagement, and a fixed list of
+outbound destinations. It intentionally stores no event log, visitor or session ID, raw IP
+address, raw user agent, query string, full referrer URL, form content, or
+session replay. Global Privacy Control, Do Not Track, and the on-site opt-out
+are honored. The dashboard combines audience categories with fewer than three
+views and is restricted to the configured owner account.

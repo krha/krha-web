@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /analytics
+Disallow: /api/analytics
 
 Sitemap: https://krha.kr/sitemap.xml
