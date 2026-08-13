@@ -44,7 +44,9 @@ test("Cloudflare runtime enforces analytics privacy, authorization, and limits",
     });
     assert.equal(owner.status, 200);
     assert.match(owner.headers.get("cache-control") ?? "", /no-store/i);
-    assert.match(await owner.text(), /krha\.kr analytics/i);
+    const ownerHtml = await owner.text();
+    assert.match(ownerHtml, /<title>Kiryong Ha - Analytics<\/title>/i);
+    assert.match(ownerHtml, /krha\.kr analytics/i);
 
     const nonOwner = await fetch(`${origin}/analytics`, {
       headers: authenticatedHeaders("different-user", "other@example.com"),
