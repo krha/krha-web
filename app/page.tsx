@@ -87,7 +87,7 @@ const career = [
     organization: "Meta",
     role: "Principal Engineer (E8)",
     detail:
-      "Private-cloud capacity management and capacity fulfillment for hyper-scale products like Facebook and Instagram.",
+      "Private-cloud infrastructure management and capacity fulfillment for hyper-scale products like Facebook and Instagram.",
     href: "https://research.facebook.com/fellows/ha-kiryong/",
   },
   {
