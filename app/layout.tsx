@@ -11,7 +11,7 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   metadataBase: new URL("https://krha.kr"),
   title: {
-    default: "Kiryong Ha | Meta Principal Engineer · Capacity & AI Infrastructure",
+    default: "Kiryong Ha | Meta Principal Engineer",
     template: "%s | Kiryong Ha",
   },
   description:

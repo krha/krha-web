@@ -33,7 +33,7 @@ test("server-renders Kiryong Ha's professional profile", async () => {
   assert.match(html, /Kiryong Ha/);
   assert.match(
     html,
-    /<title>Kiryong Ha \| Meta Principal Engineer · Capacity (?:&amp;|&) AI Infrastructure<\/title>/i,
+    /<title>Kiryong Ha \| Meta Principal Engineer<\/title>/i,
   );
   assert.doesNotMatch(html, /<title>Kiryong Ha - Analytics<\/title>/i);
   assert.match(html, /Principal Engineer/);
