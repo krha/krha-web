@@ -1,6 +1,8 @@
+/// <reference types="vite/client" />
 /** Cloudflare Worker entry point for the vinext-starter template. */
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
+import signielHtml from "../static/signiel-tuor.html?raw";
 
 interface Env {
   ASSETS: Fetcher;
@@ -28,6 +30,22 @@ interface ExecutionContext {
 const worker = {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
+
+    // Serve this exact filename through the Worker; asset HTML normalization
+    // in the hosted environment otherwise strips the requested .html suffix.
+    const signielPath = "/astra/test/signiel-tuor.html";
+    if (url.pathname === signielPath) {
+      return new Response(request.method === "HEAD" ? null : signielHtml, {
+        headers: {
+          "Content-Type": "text/html; charset=utf-8",
+          "Cache-Control": "public, max-age=0, must-revalidate",
+        },
+      });
+    }
+    if (["/astra/test", "/astra/test/", "/astra/test/index.html", "/astra/test/signiel-tuor"].includes(url.pathname)) {
+      url.pathname = signielPath;
+      return Response.redirect(url, 301);
+    }
 
     if (url.pathname === "/_vinext/image") {
       const allowedWidths = [...DEFAULT_DEVICE_SIZES, ...DEFAULT_IMAGE_SIZES];
