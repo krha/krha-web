@@ -266,6 +266,7 @@ export default function Home() {
             <p className="profile-role">
               Principal Engineer at Meta
               <br />
+              <br />
               Private Cloud Capacity &amp; Fulfillment Infrastructure
             </p>
             <div className="profile-links" aria-label="External profiles">
