@@ -264,7 +264,7 @@ export default function Home() {
               height="960"
             />
             <p className="profile-role">
-              Principal Engineer (E8) at Meta
+              Principal Engineer at Meta
               <br />
               Private Cloud Capacity &amp; Fulfillment Infrastructure
             </p>
